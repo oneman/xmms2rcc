@@ -155,8 +155,8 @@ end
 # END CRAP TEST
  
 # update playtime
-
-     time = current_track[:duration] - xc.playback_playtime.wait.value
+     playtime = xc.playback_playtime.wait.value
+     time = current_track[:duration] - playtime
      #duration = format_time(@last_track.duration)
      minutes = (time/1000)/60
      seconds = ((time/1000)-(minutes*60)).to_s.rjust(2,'0')
@@ -166,7 +166,38 @@ end
     setpos(18,43)
     addstr("Remaining: #{minutes}:#{seconds}")
 
+# wooot ghetto progress bar
+    playback_percent = ((playtime / (current_track[:duration] / 1000)) * 0.1).to_s.to_i
 
+    setpos(20,43)
+
+    case playback_percent
+
+    when 0..10
+     addstr("[=         ]")
+    when 11..20
+     addstr("[==        ]")
+    when 21..30
+     addstr("[===       ]")
+    when 31..40
+     addstr("[====      ]")
+    when 41..50
+     addstr("[=====     ]")
+    when 51..60
+     addstr("[======    ]")
+    when 61..70
+     addstr("[=======   ]")
+    when 71..80
+     addstr("[========  ]")
+    when 81..90
+     addstr("[========= ]")
+    when 91..100
+     addstr("[==========]")
+    end
+    
+    setpos(20,56)
+    addstr("#{playback_percent}% ")
+# end ghetto progress bar
 
 
 
