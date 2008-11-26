@@ -3,9 +3,11 @@
 # xmms2 ruby curses client
 #
 # wrotted by David Richards
+#
+# license is give me some money please :D 
 
 CLIENT = "xmms2rcc"
-CLIENTVERSION = "0.2 Public Alpha"
+CLIENTVERSION = "0.3 Public Alpha"
 
 
 require 'curses'
@@ -27,7 +29,7 @@ begin
   stdscr.keypad(true)
   screen = stdscr.subwin(24, 80, 0, 0)
   screen.box(0,0)
-  setpos(0,11); addstr("xmms2rcc version #{CLIENTVERSION}");
+  setpos(0,45); addstr("xmms2rcc version #{CLIENTVERSION}");
 
   setpos(3,15); addstr("Welcome to xmms2 ruby curses client");
   setpos(6,15); addstr("s to stop, p to play/resume, h to pause");
@@ -79,8 +81,8 @@ end
 
 # update title
 
-    setpos(9,6)
-    addstr("Track")
+    setpos(10,6)
+    addstr("Current Track:")
     playback_id = xc.playback_current_id.wait.value
 
 
@@ -96,15 +98,61 @@ end
 
 
     # clear old track info
-    setpos(13,6)
+    setpos(12,6)
     addstr("                                                   ")
     setpos(11,6)
     addstr("                                                   ")
 
     setpos(11,6)
     addstr(trackinfo1[0..50])
-    setpos(13,6)
+    setpos(12,6)
     addstr(filename[0..50])
+
+
+
+# update title 2  TEST CRAPVERSON OK
+
+    playlist = xc.playlist.entries.wait.value
+
+    playback_id = xc.playback_current_id.wait.value
+
+    for track in playlist
+        if track == playback_id
+         nextplayback_id = playlist[playlist.index(track) + 1]
+        end
+    end
+
+   if nextplayback_id != nil
+    res = xc.medialib_get_info(nextplayback_id).wait
+    current_track = res.value
+    filename = current_track[:url].split("/").last.to_s
+    trackinfo1 = current_track[:artist].to_s + " - " + current_track[:title].to_s
+    #if current_track[:year].length > 2
+    #   trackinfo1 = trackinfo1 + " - " + current_track[:year].to_s
+    #end
+   end
+    trackinfo1 = "" unless trackinfo1.length > 8 
+
+    setpos(14,6)
+    addstr("Next Track:              ")
+
+    # clear old track info
+    setpos(16,6)
+    addstr("                                                   ")
+    setpos(15,6)
+    addstr("                                                   ")
+   if nextplayback_id != nil
+    setpos(16,6)
+    addstr(trackinfo1[0..50])
+    setpos(15,6)
+    addstr(filename[0..50])
+   else
+    setpos(14,6)
+    addstr("End of playlist")
+
+   end
+
+# END CRAP TEST
  
 # update playtime
 
