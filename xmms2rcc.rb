@@ -7,7 +7,7 @@
 # license is give me some money please :D 
 
 CLIENT = "xmms2rcc"
-CLIENTVERSION = "0.3 Public Alpha"
+CLIENTVERSION = "0.4 Public Alpha"
 
 
 require 'curses'
@@ -21,6 +21,17 @@ require "xmmsclient"
 
 xc = Xmms::Client.new(CLIENT)
 xc.connect
+
+def get_single_line_trackinfo(trackinfohash)
+  filename = trackinfohash[:url].split("/").last.to_s
+  trackinfostring = trackinfohash[:artist].to_s + " - " + trackinfohash[:title].to_s
+  if trackinfostring.length < 5
+   return filename
+  else
+   return trackinfostring
+  end
+end
+
 
 init_screen
 begin
@@ -89,13 +100,7 @@ end
    
     res = xc.medialib_get_info(playback_id).wait
     current_track = res.value
-    filename = current_track[:url].split("/").last.to_s
-    trackinfo1 = current_track[:artist].to_s + " - " + current_track[:title].to_s
-    #if current_track[:year].length > 2
-    #   trackinfo1 = trackinfo1 + " - " + current_track[:year].to_s
-    #end
-    trackinfo1 = "" unless trackinfo1.length > 8 
-
+    trackinfostring = get_single_line_trackinfo(current_track)
 
     # clear old track info
     setpos(12,6)
@@ -104,10 +109,7 @@ end
     addstr("                                                   ")
 
     setpos(11,6)
-    addstr(trackinfo1[0..50])
-    setpos(12,6)
-    addstr(filename[0..50])
-
+    addstr(trackinfostring[0..50])
 
 
 # update title 2  TEST CRAPVERSON OK
@@ -125,15 +127,10 @@ end
    if nextplayback_id != nil
     res = xc.medialib_get_info(nextplayback_id).wait
     current_track = res.value
-    filename = current_track[:url].split("/").last.to_s
-    trackinfo1 = current_track[:artist].to_s + " - " + current_track[:title].to_s
-    #if current_track[:year].length > 2
-    #   trackinfo1 = trackinfo1 + " - " + current_track[:year].to_s
-    #end
+    trackinfostring = get_single_line_trackinfo(current_track)
    end
-    trackinfo1 = "" unless trackinfo1.length > 8 
 
-    setpos(14,6)
+    setpos(13,6)
     addstr("Next Track:              ")
 
     # clear old track info
@@ -142,10 +139,8 @@ end
     setpos(15,6)
     addstr("                                                   ")
    if nextplayback_id != nil
-    setpos(16,6)
-    addstr(trackinfo1[0..50])
-    setpos(15,6)
-    addstr(filename[0..50])
+    setpos(14,6)
+    addstr(trackinfostring[0..50])
    else
     setpos(14,6)
     addstr("End of playlist")
@@ -164,7 +159,7 @@ end
 
 
     setpos(18,43)
-    addstr("Remaining: #{minutes}:#{seconds}")
+    addstr("Remaining: #{minutes}:#{seconds}  ")
 
 # wooot ghetto progress bar
     playback_percent = ((playtime / (current_track[:duration] / 1000)) * 0.1).to_s.to_i
