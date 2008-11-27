@@ -167,8 +167,9 @@ end
     setpos(20,43)
 
     case playback_percent
-
-    when 0..10
+    when 0..5
+     addstr("[          ]")
+    when 6..10
      addstr("[=         ]")
     when 11..20
      addstr("[==        ]")
