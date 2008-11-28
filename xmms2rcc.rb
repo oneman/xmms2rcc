@@ -43,6 +43,7 @@ begin
   setpos(0,45); addstr("xmms2rcc version #{CLIENTVERSION}");
 
   setpos(3,15); addstr("Welcome to xmms2 ruby curses client");
+  setpos(5,15); addstr("n seek back, m seek forward");
   setpos(6,15); addstr("s to stop, p to play/resume, h to pause");
   setpos(7,15); addstr("q to quit, right left arrows to switch tracks");
 #  do init stuff here
@@ -53,6 +54,10 @@ begin
       when ?Q, ?q    :  break
  #     when Key::UP   :  paddle.upq
  #     when Key::DOWN :  paddle.down
+      when ?n, ?N
+        xc.playback_seek_ms_rel(-5000)
+      when ?m, ?M
+        xc.playback_seek_ms_rel(5000)
       when ?p, ?P
         xc.playback_start
         #xc.playback_tickle
