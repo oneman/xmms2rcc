@@ -7,7 +7,7 @@
 # license is give me some money please :D 
 
 CLIENT = "xmms2rcc"
-CLIENTVERSION = "0.4 Public Alpha"
+CLIENTVERSION = "0.666 DrNo Version"
 
 
 require 'curses'
@@ -26,9 +26,9 @@ def get_single_line_trackinfo(trackinfohash)
   filename = trackinfohash[:url].split("/").last.to_s
   trackinfostring = trackinfohash[:artist].to_s + " - " + trackinfohash[:title].to_s
   if trackinfostring.length < 5
-   return filename
+   return filename.ljust(60)
   else
-   return trackinfostring
+   return trackinfostring.ljust(60)
   end
 end
 
@@ -104,7 +104,7 @@ end
 
    
     res = xc.medialib_get_info(playback_id).wait
-    current_track = res.value
+    current_track = res.value.to_propdict
     trackinfostring = get_single_line_trackinfo(current_track)
 
     # clear old track info
@@ -131,7 +131,7 @@ end
 
    if nextplayback_id != nil
     res = xc.medialib_get_info(nextplayback_id).wait
-    current_track = res.value
+    current_track = res.value.to_propdict
     trackinfostring = get_single_line_trackinfo(current_track)
    end
 
@@ -148,7 +148,7 @@ end
     addstr(trackinfostring[0..50])
    else
     setpos(14,6)
-    addstr("End of playlist")
+    addstr("End of playlist                                    ")
 
    end
 
@@ -197,7 +197,7 @@ end
     end
     
     setpos(20,56)
-    addstr("#{playback_percent}% ")
+    addstr("#{playback_percent}%   ")
 # end ghetto progress bar
 
 
