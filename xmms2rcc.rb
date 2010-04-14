@@ -14,13 +14,10 @@ require 'curses'
 include Curses
 require 'time'
 
-IPCPATH = "unix:///tmp/xmms-ipc-oneman"
-
-
 require "xmmsclient"
 
-xc = Xmms::Client.new(CLIENT)
-xc.connect
+xc = Xmms::Client.new(CLIENT) 
+xc.connect(ENV['XMMS_PATH'])
 
 def get_single_line_trackinfo(trackinfohash)
   filename = trackinfohash[:url].split("/").last.to_s
@@ -40,7 +37,7 @@ begin
   stdscr.keypad(true)
   screen = stdscr.subwin(24, 80, 0, 0)
   screen.box(0,0)
-  setpos(0,45); addstr("xmms2rcc version #{CLIENTVERSION}");
+  setpos(0,40); addstr("xmms2rcc version #{CLIENTVERSION}");
 
   setpos(3,15); addstr("Welcome to xmms2 ruby curses client");
   setpos(5,15); addstr("n seek back, m seek forward");
