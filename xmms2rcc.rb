@@ -23,7 +23,7 @@ def get_single_line_trackinfo(trackinfohash)
   filename = trackinfohash[:url].split("/").last.to_s
   trackinfostring = trackinfohash[:artist].to_s + " - " + trackinfohash[:title].to_s
   if trackinfostring.length < 5
-   return filename.ljust(60)
+   return filename.ljust(60).gsub("+", " ").split(".")[0...-1].join("")
   else
    return trackinfostring.ljust(60)
   end
