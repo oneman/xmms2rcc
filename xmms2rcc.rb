@@ -7,7 +7,7 @@
 # license is give me some money please :D 
 
 CLIENT = "xmms2rcc"
-CLIENTVERSION = "0.666 DrNo Version"
+CLIENTVERSION = "0.666a Version"
 
 
 require 'curses'
