@@ -1,0 +1,30 @@
+How about a screenshot?
+
+┌───────────────────────────────────────xmms2rcc version 0.666a Version────────┐
+│                                                                              │
+│                                                                              │
+│              Welcome to xmms2 ruby curses client                             │
+│                                                                              │
+│              n seek back, m seek forward                                     │
+│              s to stop, p to play/resume, h to pause                         │
+│              q to quit, right left arrows to switch tracks                   │
+│                                                                              │
+│                                                                              │
+│     Current Track:                                                           │
+│     Chaosphere - Magnum                                                      │
+│                                                                              │
+│     Next Track:                                                              │
+│     Bar 9 - B1 Pulse                                                         │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│     Playing                              Remaining: 0:31                     │
+│                                                                              │
+│                                          [========= ] 88%                    │
+│     11/04/2010 03:30:57                                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+
+
+2010 David Richards
